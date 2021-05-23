@@ -1,9 +1,12 @@
 package com.uber.booking.controllers;
 
+import com.uber.booking.pojo.request.UserRideRequest;
+import com.uber.booking.pojo.response.RideDetailsResponse;
+import com.uber.booking.services.UserRideService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -14,21 +17,27 @@ import java.io.IOException;
 @AllArgsConstructor
 public class UserRideController {
 
-//    @PostMapping(value = "/requestRide")
-//    public void requestRide(@RequestBody UserRideRequest userRideRequest) throws IOException {
-//
-//    }
+    @Autowired
+    private final UserRideService userRideService;
+
+    @PostMapping(value = "/requestRide")
+    public void requestRide(@RequestBody UserRideRequest userRideRequest) throws IOException {
+
+        userRideService.requestRide(userRideRequest);
+    }
 
     // cancel booking
     @PostMapping(value = "/cancelRide")
-    public void cancelRide(@Param("rideId") Integer rideId) throws IOException {
+    public void cancelRide(@Param("rideId") Long rideId) throws IOException {
 
+        userRideService.cancelRide(rideId);
     }
 
     //getRide
     @GetMapping(value = "/rideDetails")
-    public void getRideDetails(@Param("rideId") Integer rideId) throws IOException {
+    public RideDetailsResponse getRideDetails(@Param("rideId") Long rideId) throws IOException {
 
+        return userRideService.getRideDetails(rideId);
     }
 
 }

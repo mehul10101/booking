@@ -38,7 +38,7 @@ public class DriverRideService {
         return bookingDetailsResponseList;
     }
 
-    public BookingDetailsResponse bookRide(Integer rideId, Integer driverId) {
+    public BookingDetailsResponse bookRide(Long rideId, Integer driverId) {
         Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeleted(rideId, REQUESTED_STATUS, false);
         if(!rideEntityOptional.isPresent()){
             throw new RuntimeException("ride not present or already booked");
@@ -54,8 +54,8 @@ public class DriverRideService {
         return bookingDetailsResponse;
     }
 
-    public BookingDetailsResponse cancelRide(Integer rideId, Integer driverId) {
-        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndAndDriverId(rideId,
+    public BookingDetailsResponse cancelRide(Long rideId, Integer driverId) {
+        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 BOOKED_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){
             throw new RuntimeException("cannot cancel ride, not booked with this driver");
@@ -69,8 +69,8 @@ public class DriverRideService {
         return bookingDetailsResponse;
     }
 
-    public void startRide(Integer rideId, Integer driverId) {
-        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndAndDriverId(rideId,
+    public void startRide(Long rideId, Integer driverId) {
+        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 BOOKED_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){
             throw new RuntimeException("cannot start ride, not booked with this driver");
@@ -80,8 +80,8 @@ public class DriverRideService {
         rideRepository.save(rideEntity);
     }
 
-    public void endRide(Integer rideId, Integer driverId) {
-        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndAndDriverId(rideId,
+    public void endRide(Long rideId, Integer driverId) {
+        Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 IN_PROGRESS_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){
             throw new RuntimeException("cannot en ride, not started with this driver");
