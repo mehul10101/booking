@@ -7,6 +7,5 @@ public class BookingDetailsResponse {
     private Long id;
     private String phoneNumber;
     private String startPoint;
-    private String response;
 
 }

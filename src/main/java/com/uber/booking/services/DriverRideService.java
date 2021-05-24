@@ -25,20 +25,21 @@ public class DriverRideService {
     private static final String COMPLETED = "COMPLETED";
 
 
-    public List<BookingDetailsResponse> getAllRides(BookingDetailsRequest bookingDetailsRequest) {
+    public List<BookingDetailsResponse> getAllRides(String vehicleType, Integer pinCode) {
         List<RideEntity> rideEntities = rideRepository.findAllByPinCodeAndVehicleTypeAndStatusAndDeleted(
-                bookingDetailsRequest.getPinCode(), bookingDetailsRequest.getVehicleType(), REQUESTED_STATUS, false);
+                pinCode, vehicleType, REQUESTED_STATUS, false);
         List<BookingDetailsResponse> bookingDetailsResponseList = new ArrayList<>();
         for(RideEntity rideEntity : rideEntities){
             BookingDetailsResponse bookingDetailsResponse = new BookingDetailsResponse();
             bookingDetailsResponse.setId(rideEntity.getId());
             bookingDetailsResponse.setStartPoint(rideEntity.getNearestLandMark());
+            bookingDetailsResponse.setPhoneNumber(rideEntity.getRiderPhoneNumber());
             bookingDetailsResponseList.add(bookingDetailsResponse);
         }
         return bookingDetailsResponseList;
     }
 
-    public BookingDetailsResponse bookRide(Long rideId, Integer driverId) {
+    public BookingDetailsResponse bookRide(Long rideId, Long driverId) {
         Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeleted(rideId, REQUESTED_STATUS, false);
         if(!rideEntityOptional.isPresent()){
             throw new RuntimeException("ride not present or already booked");
@@ -54,7 +55,7 @@ public class DriverRideService {
         return bookingDetailsResponse;
     }
 
-    public BookingDetailsResponse cancelRide(Long rideId, Integer driverId) {
+    public BookingDetailsResponse cancelRide(Long rideId, Long driverId) {
         Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 BOOKED_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){
@@ -69,7 +70,7 @@ public class DriverRideService {
         return bookingDetailsResponse;
     }
 
-    public void startRide(Long rideId, Integer driverId) {
+    public void startRide(Long rideId, Long driverId) {
         Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 BOOKED_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){
@@ -80,7 +81,7 @@ public class DriverRideService {
         rideRepository.save(rideEntity);
     }
 
-    public void endRide(Long rideId, Integer driverId) {
+    public void endRide(Long rideId, Long driverId) {
         Optional<RideEntity> rideEntityOptional = rideRepository.findFirstByIdAndStatusAndDeletedAndDriverId(rideId,
                 IN_PROGRESS_STATUS, false, driverId);
         if(!rideEntityOptional.isPresent()){

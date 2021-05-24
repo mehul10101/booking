@@ -8,7 +8,7 @@ public class UserRideRequest {
     private Integer pinCode;
     private String vehicleType;
     private String startLandMark;
-    private Integer userId;
+    private Long userId;
     private String phoneNumber;
 
 }

@@ -16,7 +16,7 @@ public interface RideRepository extends JpaRepository<RideEntity, Integer> {
 
     Optional<RideEntity> findFirstByIdAndDeleted(Long id, Boolean deleted);
 
-    Optional<RideEntity> findFirstByRiderIdAndStatusInAndDeleted(Integer riderId, List<String> status, Boolean deleted);
+    Optional<RideEntity> findFirstByRiderIdAndStatusInAndDeleted(Long riderId, List<String> status, Boolean deleted);
 
-    Optional<RideEntity> findFirstByIdAndStatusAndDeletedAndDriverId(Long riderId, String status, Boolean deleted, Integer driverId);
+    Optional<RideEntity> findFirstByIdAndStatusAndDeletedAndDriverId(Long riderId, String status, Boolean deleted, Long driverId);
 }

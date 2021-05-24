@@ -11,9 +11,9 @@ public class RideEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer riderId;
+    private Long riderId;
 
-    private Integer driverId;
+    private Long driverId;
 
     private String status;
 
@@ -44,19 +44,19 @@ public class RideEntity {
         this.id = id;
     }
 
-    public Integer getRiderId() {
+    public Long getRiderId() {
         return riderId;
     }
 
-    public void setRiderId(Integer riderId) {
+    public void setRiderId(Long riderId) {
         this.riderId = riderId;
     }
 
-    public Integer getDriverId() {
+    public Long getDriverId() {
         return driverId;
     }
 
-    public void setDriverId(Integer driverId) {
+    public void setDriverId(Long driverId) {
         this.driverId = driverId;
     }
 

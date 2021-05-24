@@ -22,25 +22,26 @@ public class DriverRideController {
     @Autowired
     private final DriverRideService driverRideService;
 
-    @GetMapping(value = "/requestsNearBy")
-    public List<BookingDetailsResponse> getBookingDetails(@RequestBody BookingDetailsRequest bookingDetailsRequest) {
-        return driverRideService.getAllRides(bookingDetailsRequest);
+    @GetMapping(value = "/requestsNearBy/{vehicleType}/{pinCode}")
+    public List<BookingDetailsResponse> getBookingDetails(@PathVariable("vehicleType") String vehicleType,
+                                                          @PathVariable("pinCode") Integer pinCode) {
+        return driverRideService.getAllRides(vehicleType, pinCode);
     }
 
 
     @PostMapping(value = "/bookRide")
-    public BookingDetailsResponse bookRide(@NotNull @Param("rideId") Long rideId, @Param("driverId") Integer driverId) throws IOException {
+    public BookingDetailsResponse bookRide(@NotNull @Param("rideId") Long rideId, @Param("driverId") Long driverId) throws IOException {
         return driverRideService.bookRide(rideId, driverId);
     }
 
 
     @PutMapping(value = "/cancelRide")
-    public BookingDetailsResponse cancelRide(@Param("rideId") Long rideId, @Param("driverId") Integer driverId) throws IOException {
+    public BookingDetailsResponse cancelRide(@Param("rideId") Long rideId, @Param("driverId") Long driverId) throws IOException {
         return driverRideService.cancelRide(rideId, driverId);
     }
 
     @PutMapping(value = "/startRide")
-    public void startRide(@Param("rideId") Long rideId, @Param("driverId") Integer driverId) throws IOException {
+    public void startRide(@Param("rideId") Long rideId, @Param("driverId") Long driverId) throws IOException {
         driverRideService.startRide(rideId, driverId);
     }
 
@@ -50,7 +51,7 @@ public class DriverRideController {
      * @throws IOException
      */
     @PutMapping(value = "/endRide")
-    public void endRide(@Param("rideId") Long rideId, @Param("driverId") Integer driverId) throws IOException {
+    public void endRide(@Param("rideId") Long rideId, @Param("driverId") Long driverId) throws IOException {
         driverRideService.endRide(rideId, driverId);
     }
 
