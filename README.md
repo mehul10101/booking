@@ -17,3 +17,6 @@ For Rider:
 
   1. Rider can request a ride.
   2. Rider can cancel a ride which has not been started.
+
+Please review the basic design diagram
+https://docs.google.com/document/d/180c6A_S0kAUDfza6hjV4ukZdamkcNmzoieeOLqdCBFI/edit#
